@@ -144,6 +144,34 @@ document.querySelectorAll('.btn').forEach(btn => {
     });
 });
 
+// Dynamic favicon switching based on tab visibility
+const favicon = document.getElementById('favicon');
+const ACTIVE_FAVICON = 'favicon-active.svg';
+const INACTIVE_FAVICON = 'favicon-inactive.svg';
+
+function updateFavicon(isActive) {
+    if (favicon) {
+        favicon.href = isActive ? ACTIVE_FAVICON : INACTIVE_FAVICON;
+    }
+}
+
+// Handle tab visibility changes
+document.addEventListener('visibilitychange', () => {
+    updateFavicon(!document.hidden);
+});
+
+// Handle window focus/blur events as fallback
+window.addEventListener('focus', () => {
+    updateFavicon(true);
+});
+
+window.addEventListener('blur', () => {
+    updateFavicon(false);
+});
+
+// Set initial favicon state
+updateFavicon(!document.hidden);
+
 // Console message
 console.log('%c👋 Hello! Thanks for checking out my portfolio!', 'color: #2563eb; font-size: 16px; font-weight: bold;');
 console.log('%cBuilt with vanilla JavaScript, HTML, and CSS', 'color: #6b7280; font-size: 12px;');
